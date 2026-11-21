@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIM-PUNCHLIST | Sistem Monitoring Punch List Konstruksi - Kelompok 4</title>
+  <style>
+    /* ==================== 100% SELF-CONTAINED CSS (TANPA CDN EKSTERNAL) ==================== */
+    :root {
+      --navy-950: #091526;
+      --navy-900: #0f2744;
+      --navy-800: #16365d;
+      --blue-600: #1d4ed8;
+      --blue-700: #1e40af;
+      --blue-50: #eff6ff;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-400: #94a3b8;
+      --slate-300: #cbd5e1;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --green-600: #16a34a;
+      --green-100: #dcfce7;
+      --green-800: #166534;
+      --amber-600: #d97706;
+      --amber-100: #fef3c7;
+      --amber-800: #92400e;
+      --orange-100: #ffedd5;
+      --orange-800: #9a3412;
+      --red-600: #dc2626;
+      --red-100: #fee2e2;
+      --red-800: #991b1b;
+      --sidebar-w: 260px;
+      --radius: 12px;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.06);
+      --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--slate-100);
+      color: var(--slate-800);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* UTILITY */
+    .hidden { display: none !important; }
+    .flex { display: flex; }
+    .flex-wrap { flex-wrap: wrap; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .justify-center { justify-content: center; }
+    .gap-1 { gap: 6px; }
+    .gap-2 { gap: 10px; }
+    .gap-3 { gap: 16px; }
+    .w-full { width: 100%; }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .font-bold { font-weight: 700; }
+    .font-semibold { font-weight: 600; }
+    .text-xs { font-size: 11.5px; }
+    .text-sm { font-size: 13px; }
+    .text-muted { color: var(--slate-500); }
+    .mt-1 { margin-top: 6px; }
+    .mt-2 { margin-top: 12px; }
+    .mt-3 { margin-top: 18px; }
+    .mb-1 { margin-bottom: 6px; }
+    .mb-2 { margin-bottom: 12px; }
+    .mb-3 { margin-bottom: 18px; }
+    .mb-4 { margin-bottom: 24px; }
+
+    /* SVG ICONS */
+    .ico {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      vertical-align: -3px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+    .ico-lg { width: 20px; height: 20px; vertical-align: -4px; }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      line-height: 1.3;
+    }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .btn-sm { padding: 5px 10px; font-size: 12px; border-radius: 6px; }
+    .btn-block { width: 100%; }
+    .btn-primary { background: var(--blue-600); color: #fff; }
+    .btn-primary:hover { background: var(--blue-700); }
+    .btn-dark { background: var(--slate-900); color: #fff; }
+    .btn-dark:hover { background: var(--slate-800); }
+    .btn-success { background: var(--green-600); color: #fff; }
+    .btn-success:hover { background: #15803d; }
+    .btn-danger { background: var(--red-600); color: #fff; }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-secondary { background: var(--slate-200); color: var(--slate-800); }
+    .btn-secondary:hover { background: var(--slate-300); }
+    .btn-outline-primary { background: #fff; color: var(--blue-600); border-color: #93c5fd; }
+    .btn-outline-primary:hover { background: var(--blue-50); border-color: var(--blue-600); }
+    .btn-outline-success { background: #fff; color: var(--green-800); border-color: #86efac; }
+    .btn-outline-success:hover { background: var(--green-100); }
+    .btn-outline-danger { background: #fff; color: var(--red-600); border-color: #fca5a5; }
+    .btn-outline-danger:hover { background: var(--red-100); }
+    .btn-outline-light { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.22); }
+    .btn-outline-light:hover { background: rgba(255,255,255,0.18); }
+
+    /* INPUTS */
+    .form-group { margin-bottom: 14px; }
+    .form-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--slate-700); margin-bottom: 5px; }
+    .form-control {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 13.5px;
+      font-family: inherit;
+      color: var(--slate-900);
+      background: #fff;
+      border: 1px solid var(--slate-300);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .form-control:focus {
+      border-color: var(--blue-600);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.14);
+    }
+    .form-control[readonly], .form-control:disabled {
+      background: var(--slate-100);
+      color: var(--slate-600);
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      font-size: 11.5px;
+      font-weight: 600;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .badge-info { background: #e0f2fe; color: #0369a1; }
+    .badge-light { background: var(--slate-100); color: var(--slate-700); border: 1px solid var(--slate-300); }
+    .badge-primary { background: #dbeafe; color: #1e40af; }
+    .badge-success { background: var(--green-100); color: var(--green-800); }
+    .badge-danger { background: var(--red-100); color: var(--red-800); }
+
+    .badge-ew-hijau { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .badge-ew-kuning { background: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+    .badge-ew-oranye { background: #ffedd5; color: #9a3412; border: 1px solid #fdba74; }
+    .badge-ew-merah { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+    .badge-st-open { background: #e2e8f0; color: #334155; }
+    .badge-st-progress { background: #dbeafe; color: #1e40af; }
+    .badge-st-pending { background: #fef3c7; color: #92400e; }
+    .badge-st-completed { background: #e0e7ff; color: #3730a3; }
+    .badge-st-verified { background: #dcfce7; color: #166534; }
+
+    /* ALERTS */
+    .alert {
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      border: 1px solid transparent;
+    }
+    .alert-danger { background: var(--red-100); color: var(--red-800); border-color: #fca5a5; }
+    .alert-warning { background: var(--amber-100); color: var(--amber-800); border-color: #fcd34d; }
+    .alert-success { background: var(--green-100); color: var(--green-800); border-color: #86efac; }
+
+    /* ==================== LOGIN SCREEN ==================== */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #091526 0%, #16365d 50%, #1d4ed8 100%);
+      padding: 20px;
+    }
+    .login-card {
+      max-width: 980px;
+      width: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      background: #fff;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+    }
+    .login-brand {
+      background: var(--navy-900);
+      color: #fff;
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .login-brand-pill {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.16);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    .login-brand h1 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+    }
+    .login-brand p {
+      color: #cbd5e1;
+      font-size: 13.5px;
+      margin: 0 0 24px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #e2e8f0;
+      margin-bottom: 11px;
+    }
+    .feature-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .login-footer-note {
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .login-form-pane {
+      padding: 40px 36px;
+      background: #fff;
+    }
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .demo-grid .full-span { grid-column: 1 / -1; }
+
+    /* ==================== APP LAYOUT ==================== */
+    #app-shell { min-height: 100vh; }
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--navy-900);
+      color: #e2e8f0;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease;
+    }
+    .sidebar-header {
+      padding: 20px 18px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-logo {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.01em;
+    }
+    .sidebar-user-box {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+    }
+    .sidebar-nav {
+      padding: 14px 12px;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .nav-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-bottom: 4px;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .nav-btn.active { background: var(--blue-600); color: #fff; font-weight: 600; }
+    .sidebar-footer {
+      padding: 14px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .main-wrapper {
+      margin-left: var(--sidebar-w);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .topbar {
+      background: #fff;
+      border-bottom: 1px solid var(--slate-200);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+    .content-area { padding: 24px; flex: 1; }
+
+    /* KPI GRID */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .kpi-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      border: 1px solid var(--slate-200);
+      border-top: 4px solid var(--blue-600);
+      box-shadow: var(--shadow-sm);
+    }
+    .kpi-card.kpi-amber { border-top-color: var(--amber-600); }
+    .kpi-card.kpi-red { border-top-color: var(--red-600); }
+    .kpi-card.kpi-green { border-top-color: var(--green-600); }
+    .kpi-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--slate-500); }
+    .kpi-num { font-size: 28px; font-weight: 800; margin: 4px 0; color: var(--slate-900); }
+
+    /* TWO-COLUMN DASHBOARD SPLIT */
+    .dash-split {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+    .panel {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid var(--slate-200);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .panel-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* PROGRESS BAR */
+    .prog-track {
+      width: 100%;
+      height: 10px;
+      background: var(--slate-200);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .prog-fill {
+      height: 100%;
+      background: var(--blue-600);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+    .pic-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .pic-box {
+      border: 1px solid var(--slate-200);
+      background: var(--slate-50);
+      border-radius: 8px;
+      padding: 8px;
+      text-align: center;
+    }
+
+    /* TABLES */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 13px;
+    }
+    th {
+      background: var(--navy-900);
+      color: #fff;
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--slate-200);
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: var(--slate-50); }
+
+    .report-table th {
+      background: var(--slate-100);
+      color: var(--slate-900);
+      border: 1px solid var(--slate-300);
+    }
+    .report-table td {
+      border: 1px solid var(--slate-300);
+    }
+
+    /* PHOTOS */
+    .thumb-photo {
+      width: 68px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--slate-300);
+      cursor: pointer;
+      transition: transform 0.15s;
+      display: block;
+    }
+    .thumb-photo:hover { transform: scale(1.06); }
+    .report-photo {
+      width: 112px;
+      height: 78px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--slate-400);
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* FILTER BAR */
+    .filter-grid {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    /* EW ZONE CARDS */
+    .ew-zone-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .ew-zone-card { padding: 12px 14px; border-radius: 10px; }
+
+    /* SYNC DOT */
+    .sync-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-300);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .sync-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .sync-online { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.22); }
+    .sync-local { background: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.22); }
+
+    /* CUSTOM MODALS (PURE JS/CSS) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.62);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-y: auto;
+    }
+    .modal-box {
+      background: #fff;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 720px;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+    }
+    .modal-box.modal-sm { max-width: 480px; }
+    .modal-head {
+      background: var(--navy-900);
+      color: #fff;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-head h3 { margin: 0; font-size: 16px; }
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .modal-close:hover { color: #fff; }
+    .modal-body { padding: 20px; overflow-y: auto; }
+    .modal-foot {
+      padding: 12px 20px;
+      background: var(--slate-50);
+      border-top: 1px solid var(--slate-200);
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .photo-upload-box {
+      border: 1.5px dashed var(--slate-300);
+      background: var(--slate-50);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    /* SIGNATURES */
+    .sig-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+      text-align: center;
+      font-size: 12.5px;
+    }
+
+    /* RESPONSIVE */
+    .mobile-menu-btn { display: none; }
+    @media (max-width: 960px) {
+      .login-card { grid-template-columns: 1fr; }
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main-wrapper { margin-left: 0; }
+      .mobile-menu-btn { display: inline-flex; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .dash-split { grid-template-columns: 1fr; }
+      .filter-grid, .ew-zone-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .kpi-grid, .filter-grid, .ew-zone-grid, .grid-2, .grid-3, .pic-grid { grid-template-columns: 1fr; }
+      .content-area { padding: 14px; }
+    }
+
+    /* PRINT PDF */
+    @media print {
+      body { background: #fff !important; }
+      .sidebar, .topbar, .no-print, #login-screen, .modal-backdrop { display: none !important; }
+      .main-wrapper { margin-left: 0 !important; }
+      .content-area { padding: 0 !important; }
+      .panel { border: none !important; box-shadow: none !important; padding: 0 !important; }
+      .table-wrap { border: none !important; overflow: visible !important; }
+      table { font-size: 10.5px !important; }
+      .report-photo { width: 92px !important; height: 64px !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== 1. HALAMAN LOGIN ==================== -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-brand">
+      <div>
+        <span class="login-brand-pill">PROGRAM STUDI TEKNIK INDUSTRI &bull; UNPAM</span>
+        <h1>SIM-PUNCHLIST</h1>
+        <p>
+          Sistem Monitoring Punch List Berbasis Web untuk Mengurangi Keterlambatan Penyelesaian Masa Pemeliharaan Proyek Konstruksi (5 Bulan)
+        </p>
+
+        <div class="feature-item">
+          <span class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></span>
+          <span>Single Source of Truth Basis Data Terpusat (15 Item Studi Kasus)</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
+          <span>Sinkronisasi Real-Time Lintas Perangkat &amp; Jaringan Berbeda</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+          <span>Early Warning System Otomatis (&le; 5 Bulan Kontrak)</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
+          <span>Validasi Poka-Yoke Dokumentasi Foto Before &amp; After</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span>Manajemen Pengguna &amp; Laporan Bergambar Siap FHO</span>
+        </div>
+      </div>
+
+      <div class="login-footer-note">
+        Disusun oleh <strong>Kelompok 4 (Kelas 08TIDE001)</strong> &bull; Capstone Design 2026
+      </div>
+    </div>
+
+    <div class="login-form-pane">
+      <h2 style="margin:0 0 4px; font-size:22px; color:var(--slate-900);">Masuk ke Sistem</h2>
+      <p class="text-muted text-sm mb-3">Silakan masuk menggunakan akun terdaftar atau klik akses cepat demo.</p>
+
+      <div id="login-alert" class="alert alert-danger mb-2 hidden"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label">Email / Username</label>
+          <input type="text" id="login-email" class="form-control" placeholder="manajemen@kontraktor.co.id" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kata Sandi (Password)</label>
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" style="padding:10px;">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          LOGIN KE DASHBOARD
+        </button>
+      </form>
+
+      <hr style="border:0; border-top:1px solid var(--slate-200); margin:18px 0;" />
+
+      <div class="text-xs font-bold text-muted mb-2" style="text-transform:uppercase; letter-spacing:0.04em;">Akses Cepat Demo (1-Klik Login):</div>
+      <div class="demo-grid">
+        <button type="button" onclick="quickLogin('manajemen@kontraktor.co.id')" class="btn btn-outline-primary btn-sm full-span" style="justify-content:flex-start; padding:8px 12px;">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span><strong>Manajemen Kontraktor Utama</strong> (Admin &amp; Verifikator)</span>
+        </button>
+        <button type="button" onclick="quickLogin('anton@lapangan.co.id')" class="btn btn-outline-success btn-sm" style="justify-content:flex-start;">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          PIC: Anton
+        </button>
+        <button type="button" onclick="quickLogin('adul@lapangan.co.id')" class="btn btn-outline-success btn-sm" style="justify-content:flex-start;">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          PIC: Adul
+        </button>
+        <button type="button" onclick="quickLogin('budi@lapangan.co.id')" class="btn btn-outline-success btn-sm" style="justify-content:flex-start;">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          PIC: Budi
+        </button>
+        <button type="button" onclick="quickLogin('ali@lapangan.co.id')" class="btn btn-outline-success btn-sm" style="justify-content:flex-start;">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          PIC: Ali
+        </button>
+      </div>
+
+      <div class="flex items-center justify-between mt-3" style="padding-top:12px; border-top:1px solid var(--slate-200);">
+        <span class="text-xs text-muted" id="login-sync-badge"><span class="sync-dot sync-local"></span>Mode Lokal / Siap Cloud</span>
+        <button type="button" class="btn btn-sm btn-secondary" onclick="openModal('firebaseModal')">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          Atur Firebase Sync
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 2. APLIKASI UTAMA ==================== -->
+<div id="app-shell" class="hidden">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="flex items-center justify-between">
+        <div class="sidebar-logo">
+          <svg class="ico ico-lg" style="color:#38bdf8;" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span>SIM-PUNCHLIST</span>
+        </div>
+        <button class="btn btn-sm btn-outline-light mobile-menu-btn" onclick="toggleSidebar()">&times;</button>
+      </div>
+      <div class="sidebar-user-box">
+        <div class="font-bold text-sm" style="color:#fff;" id="sidebar-user-name">Manajemen</div>
+        <div class="text-xs" style="color:#7dd3fc;" id="sidebar-user-role">Role: Manajemen Utama</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-btn active" data-view="dashboard" onclick="switchView('dashboard')">
+        <span class="flex items-center gap-2">
+          <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard Utama
+        </span>
+      </button>
+      <button class="nav-btn" data-view="punchlists" onclick="switchView('punchlists')">
+        <span class="flex items-center gap-2">
+          <svg class="ico" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Data Punch List
+        </span>
+        <span class="badge badge-light" id="nav-count-total">15</span>
+      </button>
+      <button class="nav-btn mgmt-only" onclick="openAddModal()">
+        <span class="flex items-center gap-2">
+          <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Input Temuan Baru
+        </span>
+      </button>
+      <button class="nav-btn" data-view="early-warning" onclick="switchView('early-warning')">
+        <span class="flex items-center gap-2">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Early Warning
+        </span>
+        <span class="badge badge-danger" id="nav-count-ew">0</span>
+      </button>
+      <button class="nav-btn" data-view="reports" onclick="switchView('reports')">
+        <span class="flex items-center gap-2">
+          <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Laporan Bergambar FHO
+        </span>
+      </button>
+      <button class="nav-btn mgmt-only" data-view="users" onclick="switchView('users')">
+        <span class="flex items-center gap-2">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Manajemen Pengguna
+        </span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="btn btn-outline-light btn-sm btn-block" onclick="logout()">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Keluar (Logout)
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    <header class="topbar">
+      <div class="flex items-center gap-2">
+        <button class="btn btn-secondary btn-sm mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+        <div>
+          <div class="font-bold" style="font-size:15px; color:var(--slate-900);" id="topbar-title">Dashboard Monitoring Masa Pemeliharaan (5 Bulan)</div>
+          <div class="text-xs text-muted">Proyek Konstruksi Kelistrikan &amp; Penerangan &bull; Kelompok 4 UNPAM</div>
+        </div>
+      </div>
+
+      <div class="flex items-center flex-wrap gap-2">
+        <span id="sync-status-pill" class="sync-pill">
+          <span class="sync-dot sync-local"></span><span>Penyimpanan Lokal</span>
+        </span>
+        <button class="btn btn-outline-primary btn-sm" onclick="openModal('firebaseModal')">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          Koneksi Cloud (Firebase)
+        </button>
+        <button class="btn btn-secondary btn-sm mgmt-only" onclick="resetDemoData()" title="Kembalikan 15 data awal sesuai Bab I">
+          Reset 15 Data
+        </button>
+      </div>
+    </header>
+
+    <main class="content-area">
+
+      <!-- VIEW 1: DASHBOARD -->
+      <section id="view-dashboard">
+        <div id="ew-banner" class="alert alert-warning flex items-center justify-between flex-wrap gap-2 mb-3">
+          <div class="flex items-center gap-2">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <strong id="ew-banner-text">Memeriksa status tenggat masa pemeliharaan 5 bulan...</strong>
+          </div>
+          <button class="btn btn-sm btn-dark" onclick="switchView('early-warning')">Lihat Detail</button>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label" style="color:var(--blue-600);">Total Punch List</div>
+            <div class="kpi-num" id="kpi-total">15</div>
+            <div class="text-xs text-muted">100% Terdaftar Terpusat</div>
+          </div>
+          <div class="kpi-card kpi-amber">
+            <div class="kpi-label" style="color:var(--amber-600);">Open / In Progress</div>
+            <div class="kpi-num" id="kpi-active">0</div>
+            <div class="text-xs text-muted">Dalam Proses Lapangan</div>
+          </div>
+          <div class="kpi-card kpi-red">
+            <div class="kpi-label" style="color:var(--red-600);">Early Warning / Overdue</div>
+            <div class="kpi-num" style="color:var(--red-600);" id="kpi-ew">0</div>
+            <div class="text-xs text-muted">Mendekati / Lewat Tenggat</div>
+          </div>
+          <div class="kpi-card kpi-green">
+            <div class="kpi-label" style="color:var(--green-600);">Verified / Closed</div>
+            <div class="kpi-num" style="color:var(--green-600);" id="kpi-verified">0</div>
+            <div class="text-xs text-muted" id="kpi-verified-pct">0% Tuntas Terverifikasi</div>
+          </div>
+        </div>
+
+        <div class="dash-split">
+          <div class="panel mb-0">
+            <h3 class="panel-title">
+              <svg class="ico" style="color:var(--blue-600);" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              Progres Penyelesaian Berdasarkan Kategori Kerusakan
+            </h3>
+            <div id="category-progress-container"></div>
+            <hr style="border:0; border-top:1px solid var(--slate-200); margin:16px 0;" />
+            <div class="text-xs font-bold text-muted mb-2" style="text-transform:uppercase;">Distribusi Beban Kerja PIC Lapangan</div>
+            <div id="pic-summary-container" class="pic-grid"></div>
+          </div>
+
+          <div class="panel mb-0">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="panel-title mb-0">
+                <svg class="ico" style="color:var(--red-600);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Notifikasi Early Warning Aktif
+              </h3>
+              <span class="badge badge-danger" id="panel-ew-badge">0 Item</span>
+            </div>
+            <div id="dashboard-ew-list" style="max-height:310px; overflow-y:auto;"></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+            <h3 class="panel-title mb-0">Pemantauan Real-Time Daftar Punch List</h3>
+            <button class="btn btn-primary btn-sm mgmt-only" onclick="openAddModal()">+ Tambah Item Temuan</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Judul Catatan</th>
+                  <th>PIC</th>
+                  <th>Tgl Temuan</th>
+                  <th>Target / Selesai</th>
+                  <th>Early Warning</th>
+                  <th>Status</th>
+                  <th>Dokumentasi</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="dashboard-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: DATA PUNCH LIST LENGKAP -->
+      <section id="view-punchlists" class="hidden">
+        <div class="panel">
+          <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+            <h3 class="panel-title mb-0">Daftar Lengkap Monitoring Punch List</h3>
+            <button class="btn btn-primary btn-sm mgmt-only" onclick="openAddModal()">+ Input Temuan Baru</button>
+          </div>
+
+          <div class="filter-grid">
+            <input type="text" id="filter-search" class="form-control" placeholder="Cari judul catatan, deskripsi, atau PIC..." oninput="renderAll()" />
+            <select id="filter-status" class="form-control" onchange="renderAll()">
+              <option value="ALL">Semua Status Pekerjaan</option>
+              <option value="Open">Open (Belum Dikerjakan)</option>
+              <option value="In Progress">In Progress (Sedang Dikerjakan)</option>
+              <option value="Pending">Pending (Tertunda)</option>
+              <option value="Completed">Completed (Menunggu Verifikasi)</option>
+              <option value="Verified/Closed">Verified/Closed (Tuntas)</option>
+            </select>
+            <select id="filter-pic" class="form-control" onchange="renderAll()">
+              <option value="ALL">Semua PIC Lapangan</option>
+            </select>
+            <select id="filter-ew" class="form-control" onchange="renderAll()">
+              <option value="ALL">Semua Zona EW</option>
+              <option value="Hijau">Hijau (Aman)</option>
+              <option value="Kuning">Kuning (Perhatian)</option>
+              <option value="Oranye">Oranye (Kritis)</option>
+              <option value="Merah">Merah (Overdue)</option>
+            </select>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th width="45">No</th>
+                  <th>Judul Catatan &amp; Deskripsi Teknis</th>
+                  <th>PIC</th>
+                  <th>Tgl Temuan</th>
+                  <th>Tgl Selesai / Tenggat</th>
+                  <th>Early Warning</th>
+                  <th>Status</th>
+                  <th>Foto Before &amp; After</th>
+                  <th width="125">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="full-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: EARLY WARNING -->
+      <section id="view-early-warning" class="hidden">
+        <div class="panel">
+          <h3 class="panel-title mb-1">Early Warning System — Pengendalian Masa Pemeliharaan (5 Bulan)</h3>
+          <p class="text-muted text-sm mb-3">
+            Klasifikasi otomatis berdasarkan sisa hari menuju batas waktu penyelesaian (&Delta;t = T<sub>due</sub> &minus; T<sub>now</sub>) untuk mencegah item terlewat hingga bulan ke-6.
+          </p>
+
+          <div class="ew-zone-grid">
+            <div class="ew-zone-card badge-ew-hijau">
+              <strong>Zona Hijau (Aman)</strong>
+              <div class="text-xs mt-1">Sisa waktu &gt; 14 hari atau sudah Verified/Closed</div>
+            </div>
+            <div class="ew-zone-card badge-ew-kuning">
+              <strong>Zona Kuning (Perhatian)</strong>
+              <div class="text-xs mt-1">Sisa waktu 4 – 14 hari kalender</div>
+            </div>
+            <div class="ew-zone-card badge-ew-oranye">
+              <strong>Zona Oranye (Kritis)</strong>
+              <div class="text-xs mt-1">Sisa waktu 0 – 3 hari atau Bulan ke-5</div>
+            </div>
+            <div class="ew-zone-card badge-ew-merah">
+              <strong>Zona Merah (Overdue)</strong>
+              <div class="text-xs mt-1">Melewati tenggat waktu (&Delta;t &lt; 0)</div>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Judul Catatan</th>
+                  <th>PIC</th>
+                  <th>Tanggal Temuan</th>
+                  <th>Target Tenggat</th>
+                  <th>Zona Peringatan</th>
+                  <th>Status Saat Ini</th>
+                  <th>Tindak Lanjut</th>
+                </tr>
+              </thead>
+              <tbody id="ew-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: LAPORAN BERGAMBAR FHO -->
+      <section id="view-reports" class="hidden">
+        <div class="panel">
+          <div class="flex items-center justify-between flex-wrap gap-2 mb-3 no-print">
+            <div>
+              <h3 class="panel-title mb-0">Laporan Rekapitulasi Punch List Bergambar (FHO)</h3>
+              <div class="text-xs text-muted">Dilengkapi dokumentasi foto Before &amp; After sesuai data lapangan Kelompok 4</div>
+            </div>
+            <div class="flex gap-2">
+              <button class="btn btn-danger btn-sm" onclick="window.print()">Cetak / Simpan PDF Bergambar</button>
+              <button class="btn btn-success btn-sm" onclick="exportExcelWithImages()">Unduh Excel (.XLS)</button>
+            </div>
+          </div>
+
+          <div id="printable-report-area">
+            <div class="text-center mb-3" style="padding-bottom:14px; border-bottom:2px solid var(--slate-900);">
+              <div class="font-bold" style="font-size:16px;">BERITA ACARA &amp; LAPORAN PENYELESAIAN PUNCH LIST MASA PEMELIHARAAN</div>
+              <div class="text-xs font-bold">PROGRAM STUDI TEKNIK INDUSTRI — FAKULTAS TEKNIK UNIVERSITAS PAMULANG</div>
+              <div class="text-xs text-muted">Kelompok 4 (Kelas 08TIDE001) &bull; Mata Kuliah Perancangan Sistem Terpadu (2026)</div>
+            </div>
+
+            <div class="flex justify-between flex-wrap text-xs mb-3">
+              <div>
+                <div><strong>Periode Pemeliharaan Kontrak:</strong> 5 Bulan (Mei – Oktober 2026)</div>
+                <div><strong>Tanggal Cetak Laporan:</strong> <span id="report-print-date"></span></div>
+              </div>
+              <div class="text-right">
+                <div><strong>Total Item Tercatat:</strong> <span id="rep-total">15</span> Item</div>
+                <div><strong>Status Tuntas (Verified/Closed):</strong> <span id="rep-verified">0</span> Item (<span id="rep-pct">0%</span>)</div>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th width="35" style="text-align:center;">No</th>
+                    <th>Judul Catatan</th>
+                    <th>Deskripsi Perbaikan</th>
+                    <th style="text-align:center;">Nama PIC</th>
+                    <th style="text-align:center;">Tgl Temuan</th>
+                    <th style="text-align:center;">Dokumentasi Before</th>
+                    <th style="text-align:center;">Tgl Selesai</th>
+                    <th style="text-align:center;">Dokumentasi After</th>
+                    <th style="text-align:center;">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="report-table-body"></tbody>
+              </table>
+            </div>
+
+            <div class="sig-grid">
+              <div>
+                <div>Disusun Oleh,</div>
+                <div><strong>Ketua Kelompok 4</strong></div>
+                <div style="height:56px;"></div>
+                <div><strong><u>Fajar Sidiq Al-Hayyu</u></strong></div>
+                <div>NIM. 221010850008</div>
+              </div>
+              <div>
+                <div>Menyetujui,</div>
+                <div><strong>Dosen Praktikum</strong></div>
+                <div style="height:56px;"></div>
+                <div><strong><u>Mohammad Shobur, S.T., M.T.</u></strong></div>
+                <div>NIDN. 04 270889 03</div>
+              </div>
+              <div>
+                <div>Mengetahui,</div>
+                <div><strong>Ketua Laboratorium Teknik Industri</strong></div>
+                <div style="height:56px;"></div>
+                <div><strong><u>Yudi Maulana, S.T., M.T.</u></strong></div>
+                <div>NIDN. 04 150683 04</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 5: MANAJEMEN PENGGUNA -->
+      <section id="view-users" class="hidden">
+        <div class="panel">
+          <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+            <div>
+              <h3 class="panel-title mb-0">Manajemen Pengguna &amp; Hak Akses (RBAC)</h3>
+              <div class="text-xs text-muted">Tambah, ubah peran, atau perbarui akun Manajemen Kontraktor Utama dan Tim Pemeliharaan Lapangan (PIC)</div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openUserModal()">+ Tambah Pengguna Baru</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th width="45">No</th>
+                  <th>Nama Lengkap</th>
+                  <th>Email / Username</th>
+                  <th>Kata Sandi</th>
+                  <th>Peran (Role)</th>
+                  <th>No. Telepon / WA</th>
+                  <th width="125">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ==================== MODAL 1: EDIT / UPDATE PROGRES & FOTO ==================== -->
+<div class="modal-backdrop hidden" id="itemModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="itemModalTitle">Detail &amp; Pembaruan Punch List</h3>
+      <button type="button" class="modal-close" onclick="closeModal('itemModal')">&times;</button>
+    </div>
+    <form id="item-form">
+      <div class="modal-body">
+        <input type="hidden" id="edit-item-id" />
+        <div id="poka-yoke-alert" class="alert alert-danger mb-2 hidden"></div>
+
+        <div class="grid-3">
+          <div class="form-group">
+            <label class="form-label">Judul Catatan Kerusakan</label>
+            <input type="text" id="edit-title" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nama PIC Lapangan</label>
+            <select id="edit-pic" class="form-control" required></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tingkat Prioritas</label>
+            <select id="edit-priority" class="form-control">
+              <option value="High">High (Tinggi)</option>
+              <option value="Medium">Medium (Sedang)</option>
+              <option value="Low">Low (Rendah)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Deskripsi Teknis Perbaikan</label>
+          <textarea id="edit-desc" rows="2" class="form-control" required></textarea>
+        </div>
+
+        <div class="grid-3">
+          <div class="form-group">
+            <label class="form-label">Tanggal Temuan</label>
+            <input type="date" id="edit-found-date" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Target Tenggat / Tgl Selesai</label>
+            <input type="date" id="edit-due-date" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status Pekerjaan</label>
+            <select id="edit-status" class="form-control font-bold">
+              <option value="Open">Open (Belum Dikerjakan)</option>
+              <option value="In Progress">In Progress (Sedang Dikerjakan)</option>
+              <option value="Pending">Pending (Tertunda)</option>
+              <option value="Completed">Completed (Selesai Dikerjakan)</option>
+              <option value="Verified/Closed">Verified/Closed (Terverifikasi)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Catatan Progres / Kendala Lapangan</label>
+          <input type="text" id="edit-remarks" class="form-control" placeholder="Contoh: Skun kabel sudah diganti dan diisolasi ulang..." />
+        </div>
+
+        <div class="text-xs font-bold mb-2" style="color:var(--red-600);">
+          Validasi Poka-Yoke: Wajib mengunggah Dokumentasi Sesudah (Foto After) untuk status Completed / Verified.
+        </div>
+
+        <div class="grid-2">
+          <div class="photo-upload-box">
+            <div class="text-xs font-bold mb-1">Dokumentasi Sebelum (Before)</div>
+            <img id="preview-before" src="" alt="Before" style="max-height:135px; border-radius:6px; margin:0 auto 8px; display:none;" />
+            <div id="empty-before" class="text-muted text-xs" style="padding:26px 0;">Belum ada foto kondisi awal</div>
+            <input type="file" id="upload-before" accept="image/*" class="form-control" style="font-size:12px;" onchange="handleImageUpload(event, 'before')" />
+          </div>
+          <div class="photo-upload-box">
+            <div class="text-xs font-bold mb-1">Dokumentasi Sesudah (After) <span style="color:var(--red-600);">*</span></div>
+            <img id="preview-after" src="" alt="After" style="max-height:135px; border-radius:6px; margin:0 auto 8px; display:none;" />
+            <div id="empty-after" class="text-muted text-xs" style="padding:26px 0;">Wajib diunggah saat perbaikan selesai</div>
+            <input type="file" id="upload-after" accept="image/*" class="form-control" style="font-size:12px;" onchange="handleImageUpload(event, 'after')" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('itemModal')">Batal</button>
+        <button type="submit" class="btn btn-primary btn-sm">Simpan Perubahan Real-Time</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==================== MODAL 2: TAMBAH / EDIT PENGGUNA ==================== -->
+<div class="modal-backdrop hidden" id="userModal">
+  <div class="modal-box modal-sm">
+    <div class="modal-head">
+      <h3 id="userModalTitle">Tambah Pengguna Sistem</h3>
+      <button type="button" class="modal-close" onclick="closeModal('userModal')">&times;</button>
+    </div>
+    <form id="user-form">
+      <div class="modal-body">
+        <input type="hidden" id="edit-user-id" />
+        <div class="form-group">
+          <label class="form-label">Nama Lengkap / Nama PIC</label>
+          <input type="text" id="user-name" class="form-control" placeholder="Contoh: Anton" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email / Username Login</label>
+          <input type="text" id="user-email" class="form-control" placeholder="anton@lapangan.co.id" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kata Sandi (Password)</label>
+          <input type="text" id="user-password" class="form-control" placeholder="pic123" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Peran Hak Akses (Role)</label>
+          <select id="user-role" class="form-control" required>
+            <option value="mgmt">Manajemen Kontraktor Utama (Full Akses &amp; Verifikasi)</option>
+            <option value="pic">Tim Pemeliharaan Lapangan (PIC Eksekutor)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">No. Telepon / WhatsApp</label>
+          <input type="text" id="user-phone" class="form-control" placeholder="0812xxxxxxxx" />
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('userModal')">Batal</button>
+        <button type="submit" class="btn btn-primary btn-sm">Simpan Pengguna</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==================== MODAL 3: PREVIEW FOTO BESAR ==================== -->
+<div class="modal-backdrop hidden" id="photoPreviewModal" onclick="if(event.target===this) closeModal('photoPreviewModal')">
+  <div class="modal-box modal-sm">
+    <div class="modal-head">
+      <h3 id="photoPreviewTitle">Dokumentasi Lapangan</h3>
+      <button type="button" class="modal-close" onclick="closeModal('photoPreviewModal')">&times;</button>
+    </div>
+    <div class="modal-body text-center" style="background:#0f172a;">
+      <img id="photoPreviewImg" src="" style="max-width:100%; max-height:68vh; border-radius:8px;" />
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL 4: KONFIGURASI FIREBASE REAL-TIME ==================== -->
+<div class="modal-backdrop hidden" id="firebaseModal">
+  <div class="modal-box modal-sm">
+    <div class="modal-head">
+      <h3>Koneksi Firebase Realtime Database</h3>
+      <button type="button" class="modal-close" onclick="closeModal('firebaseModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p class="text-sm text-muted" style="margin-top:0;">
+        Hubungkan aplikasi GitHub Pages ini dengan <strong>Firebase Realtime Database</strong> agar perubahan data punch list, foto, dan pengguna langsung tersinkronisasi secara <em>real-time</em> di jaringan internet yang berbeda.
+      </p>
+      <div class="form-group">
+        <label class="form-label">URL Firebase Realtime Database</label>
+        <input type="url" id="firebase-url-input" class="form-control" placeholder="https://sim-punchlist-default-rtdb.firebaseio.com" />
+        <div class="text-xs text-muted mt-1">Pastikan Firebase Rules diatur ke <code>".read": true, ".write": true</code>.</div>
+      </div>
+      <div id="firebase-test-msg" class="text-xs"></div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-outline-danger btn-sm" onclick="disconnectFirebase()">Putuskan Cloud</button>
+      <button type="button" class="btn btn-primary btn-sm" onclick="saveFirebaseConfig()">Simpan &amp; Sinkronkan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==================== MODAL HELPERS (TANPA DEPENDENSI JQUERY/BOOTSTRAP) ====================
+function openModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('hidden');
+}
+function closeModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('hidden');
+}
+
+// ==================== GENERATOR ILUSTRASI DOKUMENTASI TEKNIS LAPANGAN ====================
+function makeTechPhoto(type, state, label, dateStr) {
+  const isBefore = state === 'before';
+  const bg = isBefore ? '#1e293b' : '#0f172a';
+  const badgeColor = isBefore ? '#dc2626' : '#16a34a';
+  const badgeText = isBefore ? 'BEFORE' : 'AFTER';
+  let graphic = '';
+
+  if (type === 'kabel') {
+    graphic = isBefore
+      ? `<circle cx="160" cy="110" r="68" fill="#475569" stroke="#94a3b8" stroke-width="5"/>
+         <path d="M90 110 L142 110" stroke="#090d16" stroke-width="14" stroke-linecap="round"/>
+         <path d="M178 110 L230 110" stroke="#090d16" stroke-width="14" stroke-linecap="round"/>
+         <path d="M142 106 L156 98 M142 114 L154 121" stroke="#f59e0b" stroke-width="3"/>
+         <text x="160" y="160" fill="#fca5a5" font-size="11" text-anchor="middle" font-family="sans-serif">Konektor Terlepas / Korosi</text>`
+      : `<circle cx="160" cy="110" r="68" fill="#475569" stroke="#94a3b8" stroke-width="5"/>
+         <path d="M85 110 L235 110" stroke="#090d16" stroke-width="14" stroke-linecap="round"/>
+         <rect x="132" y="99" width="56" height="22" rx="4" fill="#2563eb" stroke="#93c5fd" stroke-width="2"/>
+         <text x="160" y="160" fill="#86efac" font-size="11" text-anchor="middle" font-family="sans-serif">Skun &amp; Isolasi Terpasang</text>`;
+  } else if (type === 'trafo') {
+    graphic = isBefore
+      ? `<rect x="75" y="65" width="170" height="90" rx="6" fill="#334155" stroke="#64748b" stroke-width="3"/>
+         <circle cx="160" cy="105" r="10" fill="#94a3b8"/>
+         <path d="M110 155 Q135 130 145 142" fill="none" stroke="#d97706" stroke-width="6" stroke-dasharray="6,3"/>
+         <text x="160" y="175" fill="#fca5a5" font-size="11" text-anchor="middle" font-family="sans-serif">Kabel BC Grounding Menggantung</text>`
+      : `<rect x="75" y="65" width="170" height="90" rx="6" fill="#334155" stroke="#64748b" stroke-width="3"/>
+         <path d="M105 155 L160 105" stroke="#d97706" stroke-width="7" stroke-linecap="round"/>
+         <polygon points="150,105 170,105 160,92" fill="#eab308"/>
+         <circle cx="160" cy="105" r="7" fill="#e2e8f0" stroke="#0f172a" stroke-width="2"/>
+         <text x="160" y="175" fill="#86efac" font-size="11" text-anchor="middle" font-family="sans-serif">Couple Lug BC &amp; Baut Trafo OK</text>`;
+  } else {
+    graphic = isBefore
+      ? `<circle cx="160" cy="110" r="64" fill="#27272a" stroke="#71717a" stroke-width="6"/>
+         <rect x="135" y="96" width="50" height="28" rx="6" fill="#09090b" stroke="#52525b" stroke-width="2"/>
+         <text x="160" y="114" fill="#71717a" font-size="11" text-anchor="middle" font-family="sans-serif">OFF</text>
+         <text x="160" y="162" fill="#fca5a5" font-size="11" text-anchor="middle" font-family="sans-serif">Armatur Lampu Mati</text>`
+      : `<circle cx="160" cy="110" r="64" fill="#27272a" stroke="#a1a1aa" stroke-width="6"/>
+         <rect x="132" y="94" width="56" height="32" rx="8" fill="#fef08a" stroke="#facc15" stroke-width="3"/>
+         <circle cx="160" cy="110" r="24" fill="rgba(254,240,138,0.35)"/>
+         <text x="160" y="162" fill="#86efac" font-size="11" text-anchor="middle" font-family="sans-serif">Lampu Menyala Normal</text>`;
+  }
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="210" viewBox="0 0 320 210">
+    <rect width="320" height="210" fill="${bg}"/>
+    ${graphic}
+    <rect x="10" y="10" width="66" height="22" rx="4" fill="${badgeColor}"/>
+    <text x="43" y="25" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle" font-family="sans-serif">${badgeText}</text>
+    <text x="310" y="24" fill="#cbd5e1" font-size="10" text-anchor="end" font-family="monospace">${label}</text>
+    <text x="310" y="200" fill="#94a3b8" font-size="10" text-anchor="end" font-family="monospace">${dateStr}</text>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+// ==================== DATA AWAL (15 ITEM STUDI KASUS BAB I & USER) ====================
+const DEFAULT_USERS = [
+  { id: 'u1', name: 'Manajemen Kontraktor Utama', email: 'manajemen@kontraktor.co.id', password: 'admin123', role: 'mgmt', phone: '0812-8800-1001' },
+  { id: 'u2', name: 'Anton', email: 'anton@lapangan.co.id', password: 'pic123', role: 'pic', phone: '0813-1100-2001' },
+  { id: 'u3', name: 'Adul', email: 'adul@lapangan.co.id', password: 'pic123', role: 'pic', phone: '0813-1100-2002' },
+  { id: 'u4', name: 'Budi', email: 'budi@lapangan.co.id', password: 'pic123', role: 'pic', phone: '0813-1100-2003' },
+  { id: 'u5', name: 'Ali', email: 'ali@lapangan.co.id', password: 'pic123', role: 'pic', phone: '0813-1100-2004' }
+];
+
+const DEFAULT_ITEMS = [
+  {
+    id: 'PL-001', no: 1, title: 'Konekting Kabel Rusak',
+    description: 'Koneksi/terminasi kabel mengalami kerusakan; perlu dilakukan pemotongan ulang, penyambungan kembali, atau penggantian skun kabel (cable lug).',
+    pic: 'Anton', priority: 'High', foundDate: '2026-05-21', dueDate: '2026-10-21',
+    status: 'Verified/Closed', remarks: 'Skun kabel baru telah terpasang dan diisolasi.',
+    photoBefore: makeTechPhoto('kabel', 'before', 'PL-001', '21 Mei 2026'),
+    photoAfter: makeTechPhoto('kabel', 'after', 'PL-001', '21 Okt 2026')
+  },
+  {
+    id: 'PL-002', no: 2, title: 'Konekting Kabel Rusak',
+    description: 'Konektor/terminasi kabel mengalami kerusakan/kendur; perlu perbaikan koneksi serta pengencangan ulang baut terminal.',
+    pic: 'Adul', priority: 'High', foundDate: '2026-05-14', dueDate: '2026-10-14',
+    status: 'Verified/Closed', remarks: 'Baut terminal dikencangkan sesuai standar torsi.',
+    photoBefore: makeTechPhoto('kabel', 'before', 'PL-002', '14 Mei 2026'),
+    photoAfter: makeTechPhoto('kabel', 'after', 'PL-002', '14 Okt 2026')
+  },
+  {
+    id: 'PL-003', no: 3, title: 'Kabel BC Belum Di Couple Ke Trafo',
+    description: 'Kabel Bare Copper (BC) untuk sistem pembumian (grounding) belum terhubung/terpasang pada busbar/terminal grounding trafo.',
+    pic: 'Anton', priority: 'High', foundDate: '2026-06-19', dueDate: '2026-11-26',
+    status: 'In Progress', remarks: 'Menyiapkan lug kabel BC 70mm untuk terminasi busbar trafo.',
+    photoBefore: makeTechPhoto('trafo', 'before', 'PL-003', '19 Jun 2026'),
+    photoAfter: ''
+  },
+  {
+    id: 'PL-004', no: 4, title: 'Kabel BC Belum Di Couple Ke Trafo',
+    description: 'Kabel BC grounding belum dikoneksikan ke bodi/body grounding trafo; lakukan penyambungan menggunakan klem/skun kabel yang sesuai.',
+    pic: 'Budi', priority: 'High', foundDate: '2026-06-19', dueDate: '2026-10-26',
+    status: 'Verified/Closed', remarks: 'Klem grounding terpasang pada bodi trafo.',
+    photoBefore: makeTechPhoto('trafo', 'before', 'PL-004', '19 Jun 2026'),
+    photoAfter: makeTechPhoto('trafo', 'after', 'PL-004', '26 Okt 2026')
+  },
+  {
+    id: 'PL-005', no: 5, title: 'Kabel BC Belum Di Couple Ke Trafo',
+    description: 'Kabel BC belum terpasang ke terminal neutral/grounding trafo; lakukan penyambungan dan pastikan koneksi kencang.',
+    pic: 'Adul', priority: 'High', foundDate: '2026-06-17', dueDate: '2026-10-17',
+    status: 'Verified/Closed', remarks: 'Penyambungan terminal neutral/grounding tuntas.',
+    photoBefore: makeTechPhoto('trafo', 'before', 'PL-005', '17 Jun 2026'),
+    photoAfter: makeTechPhoto('trafo', 'after', 'PL-005', '17 Okt 2026')
+  },
+  {
+    id: 'PL-006', no: 6, title: 'Kabel BC Belum Di Couple Ke Trafo',
+    description: 'Kabel BC grounding belum terhubung ke trafo; lakukan terminasi kabel BC pada titik grounding trafo.',
+    pic: 'Anton', priority: 'High', foundDate: '2026-06-19', dueDate: '2026-10-26',
+    status: 'Verified/Closed', remarks: 'Terminasi kabel BC selesai diverifikasi.',
+    photoBefore: makeTechPhoto('trafo', 'before', 'PL-006', '19 Jun 2026'),
+    photoAfter: makeTechPhoto('trafo', 'after', 'PL-006', '26 Okt 2026')
+  },
+  {
+    id: 'PL-007', no: 7, title: 'Kabel BC Belum Di Couple Ke Trafo',
+    description: 'Penyambungan kabel BC ke grounding trafo belum dilakukan; persiapkan lug kabel dan lakukan pembautan pada terminal trafo.',
+    pic: 'Adul', priority: 'High', foundDate: '2026-07-01', dueDate: '2026-11-23',
+    status: 'Completed', remarks: 'Lug kabel BC sudah dibaut kencang, mohon verifikasi Manajemen.',
+    photoBefore: makeTechPhoto('trafo', 'before', 'PL-007', '01 Jul 2026'),
+    photoAfter: makeTechPhoto('trafo', 'after', 'PL-007', '20 Nov 2026')
+  },
+  {
+    id: 'PL-008', no: 8, title: 'Kabel BC Belum Di Couple Ke Trafo',
+    description: 'Kabel BC grounding menggantung dan belum terhubung ke trafo; lakukan terminasi dan pastikan nilai tahanan grounding sesuai standar.',
+    pic: 'Budi', priority: 'High', foundDate: '2026-06-19', dueDate: '2026-11-28',
+    status: 'Open', remarks: 'Dijadwalkan pengukuran tahanan grounding.',
+    photoBefore: makeTechPhoto('trafo', 'before', 'PL-008', '19 Jun 2026'),
+    photoAfter: ''
+  },
+  {
+    id: 'PL-009', no: 9, title: 'Konekting Kabel Rusak',
+    description: 'Konektor/skun kabel mengalami kerusakan/korosi; lakukan penggantian konektor baru dan isolasi ulang.',
+    pic: 'Anton', priority: 'Medium', foundDate: '2026-05-18', dueDate: '2026-10-18',
+    status: 'Verified/Closed', remarks: 'Konektor baru terpasang dengan heatshrink.',
+    photoBefore: makeTechPhoto('kabel', 'before', 'PL-009', '18 Mei 2026'),
+    photoAfter: makeTechPhoto('kabel', 'after', 'PL-009', '18 Okt 2026')
+  },
+  {
+    id: 'PL-010', no: 10, title: 'Lampu Mati',
+    description: 'Lampu penerangan RCL-221 tidak menyala; lakukan pengecekan suplai daya, sakelar, ballast, atau lakukan penggantian bohlam lampu baru.',
+    pic: 'Ali', priority: 'Medium', foundDate: '2026-05-12', dueDate: '2026-10-12',
+    status: 'Verified/Closed', remarks: 'Penggantian lampu RCL-221 selesai dan menyala normal.',
+    photoBefore: makeTechPhoto('lampu', 'before', 'PL-010 RCL-221', '12 Mei 2026'),
+    photoAfter: makeTechPhoto('lampu', 'after', 'PL-010 RCL-221', '12 Okt 2026')
+  },
+  {
+    id: 'PL-011', no: 11, title: 'Konekting Kabel Rusak',
+    description: 'Koneksi kabel terbakar/rusak; perlu perbaikan kabel, penggantian terminal block/skun, serta pengujian kontinuitas.',
+    pic: 'Adul', priority: 'High', foundDate: '2026-06-17', dueDate: '2026-10-10',
+    status: 'Verified/Closed', remarks: 'Uji kontinuitas normal setelah penggantian skun.',
+    photoBefore: makeTechPhoto('kabel', 'before', 'PL-011', '17 Jun 2026'),
+    photoAfter: makeTechPhoto('kabel', 'after', 'PL-011', '10 Okt 2026')
+  },
+  {
+    id: 'PL-012', no: 12, title: 'Lampu Mati',
+    description: 'Armatur/bohlam lampu RCL-225 mati; lakukan pemeriksaan pengkabelan fasa-netral dan ganti armatur/lampu jika rusak.',
+    pic: 'Budi', priority: 'Medium', foundDate: '2026-05-12', dueDate: '2026-10-12',
+    status: 'Verified/Closed', remarks: 'Armatur RCL-225 diganti dan berfungsi baik.',
+    photoBefore: makeTechPhoto('lampu', 'before', 'PL-012 RCL-225', '12 Mei 2026'),
+    photoAfter: makeTechPhoto('lampu', 'after', 'PL-012 RCL-225', '12 Okt 2026')
+  },
+  {
+    id: 'PL-013', no: 13, title: 'Konekting Kabel Rusak',
+    description: 'Terminasi kabel terkelupas/rusak; lakukan pemotongan bagian kabel rusak dan pasang skun kabel baru.',
+    pic: 'Ali', priority: 'Medium', foundDate: '2026-06-18', dueDate: '2026-10-18',
+    status: 'Verified/Closed', remarks: 'Pemotongan ulang dan pemasangan skun selesai.',
+    photoBefore: makeTechPhoto('kabel', 'before', 'PL-013', '18 Jun 2026'),
+    photoAfter: makeTechPhoto('kabel', 'after', 'PL-013', '18 Okt 2026')
+  },
+  {
+    id: 'PL-014', no: 14, title: 'Konekting Kabel Rusak',
+    description: 'Koneksi sambungan kabel tidak sempurna/rusak; lakukan terminasi ulang dan kencangkan sesuai spesifikasi torak/baut.',
+    pic: 'Ali', priority: 'Medium', foundDate: '2026-05-18', dueDate: '2026-10-18',
+    status: 'Verified/Closed', remarks: 'Terminasi ulang selesai diverifikasi.',
+    photoBefore: makeTechPhoto('kabel', 'before', 'PL-014', '18 Mei 2026'),
+    photoAfter: makeTechPhoto('kabel', 'after', 'PL-014', '18 Okt 2026')
+  },
+  {
+    id: 'PL-015', no: 15, title: 'Konekting Kabel Rusak',
+    description: 'Koneksi kabel cacat/rusak; lakukan penggantian aksesoris sambungan dan lakukan pengujian isolasi kabel (megger test).',
+    pic: 'Anton', priority: 'High', foundDate: '2026-05-18', dueDate: '2026-10-18',
+    status: 'Verified/Closed', remarks: 'Hasil megger test memenuhi standar isolasi.',
+    photoBefore: makeTechPhoto('kabel', 'before', 'PL-015', '18 Mei 2026'),
+    photoAfter: makeTechPhoto('kabel', 'after', 'PL-015', '18 Okt 2026')
+  }
+];
+
+// ==================== STATE & SINKRONISASI REAL-TIME ====================
+let state = {
+  items: [],
+  users: [],
+  currentUser: null,
+  firebaseUrl: localStorage.getItem('sim_punchlist_fb_url') || ''
+};
+
+let tempPhotoBefore = '';
+let tempPhotoAfter = '';
+let syncInterval = null;
+
+function loadLocalData() {
+  const savedItems = localStorage.getItem('sim_punchlist_items');
+  const savedUsers = localStorage.getItem('sim_punchlist_users');
+  state.items = savedItems ? JSON.parse(savedItems) : JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+  state.users = savedUsers ? JSON.parse(savedUsers) : JSON.parse(JSON.stringify(DEFAULT_USERS));
+  if (!savedItems) saveLocalData();
+}
+
+function saveLocalData() {
+  localStorage.setItem('sim_punchlist_items', JSON.stringify(state.items));
+  localStorage.setItem('sim_punchlist_users', JSON.stringify(state.users));
+}
+
+async function pushToCloud() {
+  saveLocalData();
+  if (!state.firebaseUrl) return;
+  try {
+    const cleanUrl = state.firebaseUrl.replace(/\/$/, '');
+    await fetch(`${cleanUrl}/sim_punchlist.json`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: state.items,
+        users: state.users,
+        updatedAt: new Date().toISOString()
+      })
+    });
+    updateSyncIndicator(true, 'Cloud Real-Time Aktif');
+  } catch (err) {
+    updateSyncIndicator(false, 'Gagal Koneksi Cloud (Lokal Aktif)');
+  }
+}
+
+async function pullFromCloud() {
+  if (!state.firebaseUrl) return;
+  try {
+    const cleanUrl = state.firebaseUrl.replace(/\/$/, '');
+    const res = await fetch(`${cleanUrl}/sim_punchlist.json`);
+    if (!res.ok) throw new Error('HTTP Error');
+    const data = await res.json();
+    if (data && Array.isArray(data.items) && data.items.length > 0) {
+      const changed = JSON.stringify(data.items) !== JSON.stringify(state.items) ||
+                      JSON.stringify(data.users) !== JSON.stringify(state.users);
+      if (changed) {
+        state.items = data.items;
+        if (Array.isArray(data.users) && data.users.length > 0) state.users = data.users;
+        saveLocalData();
+        if (state.currentUser) renderAll();
+      }
+      updateSyncIndicator(true, 'Cloud Real-Time Aktif');
+    } else {
+      await pushToCloud();
+    }
+  } catch (err) {
+    updateSyncIndicator(false, 'Offline / Cek Rules Firebase');
+  }
+}
+
+function updateSyncIndicator(isOnline, text) {
+  const pill = document.getElementById('sync-status-pill');
+  const loginBadge = document.getElementById('login-sync-badge');
+  const dot = `<span class="sync-dot ${isOnline ? 'sync-online' : 'sync-local'}"></span>`;
+  if (pill) pill.innerHTML = `${dot}<span>${text}</span>`;
+  if (loginBadge) loginBadge.innerHTML = `${dot}${text}`;
+}
+
+function startRealtimePolling() {
+  if (syncInterval) clearInterval(syncInterval);
+  if (state.firebaseUrl) {
+    pullFromCloud();
+    syncInterval = setInterval(pullFromCloud, 3500);
+  } else {
+    updateSyncIndicator(false, 'Penyimpanan Lokal (Siap Cloud)');
+  }
+}
+
+function saveFirebaseConfig() {
+  const url = document.getElementById('firebase-url-input').value.trim();
+  const msg = document.getElementById('firebase-test-msg');
+  if (!url) {
+    msg.innerHTML = '<span style="color:var(--red-600);">Masukkan URL Firebase Realtime Database terlebih dahulu.</span>';
+    return;
+  }
+  state.firebaseUrl = url;
+  localStorage.setItem('sim_punchlist_fb_url', url);
+  msg.innerHTML = '<span style="color:var(--green-600);">Menghubungkan &amp; menyinkronkan data...</span>';
+  startRealtimePolling();
+  setTimeout(() => closeModal('firebaseModal'), 800);
+}
+
+function disconnectFirebase() {
+  state.firebaseUrl = '';
+  localStorage.removeItem('sim_punchlist_fb_url');
+  document.getElementById('firebase-url-input').value = '';
+  startRealtimePolling();
+  closeModal('firebaseModal');
+}
+
+// ==================== AUTENTIKASI LOGIN & HAK AKSES ====================
+document.getElementById('login-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  const pass = document.getElementById('login-password').value.trim();
+  const user = state.users.find(u => u.email.toLowerCase() === email && u.password === pass);
+  if (!user) {
+    const alertBox = document.getElementById('login-alert');
+    alertBox.textContent = 'Email/Username atau Kata Sandi tidak sesuai!';
+    alertBox.classList.remove('hidden');
+    return;
+  }
+  loginSuccess(user);
+});
+
+function quickLogin(email) {
+  const user = state.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+  if (user) loginSuccess(user);
+}
+
+function loginSuccess(user) {
+  state.currentUser = user;
+  sessionStorage.setItem('sim_punchlist_session', JSON.stringify(user));
+  document.getElementById('login-alert').classList.add('hidden');
+  document.getElementById('login-screen').classList.add('hidden');
+  document.getElementById('app-shell').classList.remove('hidden');
+
+  document.getElementById('sidebar-user-name').textContent = user.name;
+  document.getElementById('sidebar-user-role').textContent =
+    user.role === 'mgmt' ? 'Manajemen Kontraktor Utama' : 'Tim Lapangan (PIC)';
+
+  document.querySelectorAll('.mgmt-only').forEach(el => {
+    el.classList.toggle('hidden', user.role !== 'mgmt');
+  });
+
+  switchView('dashboard');
+  renderAll();
+}
+
+function logout() {
+  state.currentUser = null;
+  sessionStorage.removeItem('sim_punchlist_session');
+  document.getElementById('app-shell').classList.add('hidden');
+  document.getElementById('login-screen').classList.remove('hidden');
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+function switchView(viewName) {
+  ['dashboard', 'punchlists', 'early-warning', 'reports', 'users'].forEach(v => {
+    const sec = document.getElementById(`view-${v}`);
+    if (sec) sec.classList.toggle('hidden', v !== viewName);
+  });
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === viewName);
+  });
+  const titles = {
+    'dashboard': 'Dashboard Monitoring Masa Pemeliharaan (5 Bulan)',
+    'punchlists': 'Daftar Lengkap Data Punch List',
+    'early-warning': 'Early Warning System & Eskalasi Tenggat',
+    'reports': 'Laporan Rekapitulasi Bergambar (Final Hand Over)',
+    'users': 'Manajemen Pengguna & Hak Akses'
+  };
+  document.getElementById('topbar-title').textContent = titles[viewName] || 'SIM-PUNCHLIST';
+  document.getElementById('sidebar').classList.remove('open');
+  renderAll();
+}
+
+// ==================== EARLY WARNING & HELPERS ====================
+function getEarlyWarning(item) {
+  if (item.status === 'Verified/Closed') {
+    return { zone: 'Hijau', label: 'Hijau (Tuntas)', badgeClass: 'badge-ew-hijau', diffDays: 999 };
+  }
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const due = new Date(item.dueDate);
+  due.setHours(0, 0, 0, 0);
+  const diffDays = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
+
+  if (diffDays < 0) {
+    return { zone: 'Merah', label: `Merah (Overdue H+${Math.abs(diffDays)})`, badgeClass: 'badge-ew-merah', diffDays };
+  }
+  if (diffDays <= 3) {
+    return { zone: 'Oranye', label: `Oranye (Kritis H-${diffDays})`, badgeClass: 'badge-ew-oranye', diffDays };
+  }
+  if (diffDays <= 14) {
+    return { zone: 'Kuning', label: `Kuning (H-${diffDays})`, badgeClass: 'badge-ew-kuning', diffDays };
+  }
+  return { zone: 'Hijau', label: `Hijau (Aman H-${diffDays})`, badgeClass: 'badge-ew-hijau', diffDays };
+}
+
+function getStatusBadge(status) {
+  const map = {
+    'Open': 'badge-st-open',
+    'In Progress': 'badge-st-progress',
+    'Pending': 'badge-st-pending',
+    'Completed': 'badge-st-completed',
+    'Verified/Closed': 'badge-st-verified'
+  };
+  return `<span class="badge ${map[status] || 'badge-light'}">${status}</span>`;
+}
+
+function formatDateID(isoDate) {
+  if (!isoDate) return '-';
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+  const parts = isoDate.split('-');
+  if (parts.length !== 3) return isoDate;
+  return `${parts[2]} ${months[parseInt(parts[1], 10) - 1]} ${parts[0]}`;
+}
+
+// ==================== RENDERING ====================
+function getVisibleItems() {
+  if (!state.currentUser) return [];
+  if (state.currentUser.role === 'mgmt') return state.items;
+  return state.items.filter(it => it.pic.toLowerCase() === state.currentUser.name.toLowerCase());
+}
+
+function renderAll() {
+  const visibleItems = getVisibleItems();
+  const total = visibleItems.length;
+  const verified = visibleItems.filter(i => i.status === 'Verified/Closed').length;
+  const active = visibleItems.filter(i => ['Open', 'In Progress', 'Pending', 'Completed'].includes(i.status)).length;
+  const ewItems = visibleItems.filter(i => {
+    const ew = getEarlyWarning(i);
+    return ['Kuning', 'Oranye', 'Merah'].includes(ew.zone) && i.status !== 'Verified/Closed';
+  });
+
+  document.getElementById('kpi-total').textContent = total;
+  document.getElementById('kpi-active').textContent = active;
+  document.getElementById('kpi-ew').textContent = ewItems.length;
+  document.getElementById('kpi-verified').textContent = verified;
+  const pct = total > 0 ? ((verified / total) * 100).toFixed(1) : 0;
+  document.getElementById('kpi-verified-pct').textContent = `${pct}% Tuntas Terverifikasi`;
+  document.getElementById('nav-count-total').textContent = total;
+  document.getElementById('nav-count-ew').textContent = ewItems.length;
+
+  const banner = document.getElementById('ew-banner');
+  const bannerText = document.getElementById('ew-banner-text');
+  if (ewItems.length > 0) {
+    banner.className = 'alert alert-warning flex items-center justify-between flex-wrap gap-2 mb-3';
+    bannerText.textContent = `PERINGATAN DINI (EARLY WARNING): Terdapat ${ewItems.length} item punch list mendekati atau melewati tenggat masa pemeliharaan 5 bulan!`;
+  } else {
+    banner.className = 'alert alert-success flex items-center justify-between flex-wrap gap-2 mb-3';
+    bannerText.textContent = 'SELURUH ITEM TERKENDALI: Tidak ada item punch list kritis/terlambat pada masa pemeliharaan 5 bulan.';
+  }
+
+  renderCategoryAndPicStats(visibleItems);
+  renderDashboardEWList(ewItems);
+  renderDashboardTable(visibleItems);
+  renderFullTable(visibleItems);
+  renderEWTable(visibleItems);
+  renderReportTable(state.items);
+  renderUsersTable();
+  populatePicFilter();
+}
+
+function renderCategoryAndPicStats(items) {
+  const categories = [
+    { name: 'Konekting Kabel Rusak', match: i => i.title.toLowerCase().includes('konekting') },
+    { name: 'Kabel BC Belum Di Couple Ke Trafo', match: i => i.title.toLowerCase().includes('kabel bc') },
+    { name: 'Lampu Mati', match: i => i.title.toLowerCase().includes('lampu') }
+  ];
+
+  document.getElementById('category-progress-container').innerHTML = categories.map(c => {
+    const list = items.filter(c.match);
+    const done = list.filter(i => i.status === 'Verified/Closed').length;
+    const pct = list.length ? Math.round((done / list.length) * 100) : 0;
+    return `
+      <div class="mb-2">
+        <div class="flex justify-between text-xs font-bold mb-1">
+          <span>${c.name} (${list.length} Item)</span>
+          <span>${done}/${list.length} Tuntas (${pct}%)</span>
+        </div>
+        <div class="prog-track">
+          <div class="prog-fill" style="width:${pct}%"></div>
+        </div>
+      </div>`;
+  }).join('');
+
+  const picNames = [...new Set(items.map(i => i.pic))];
+  document.getElementById('pic-summary-container').innerHTML = picNames.map(pic => {
+    const list = items.filter(i => i.pic === pic);
+    const done = list.filter(i => i.status === 'Verified/Closed').length;
+    return `
+      <div class="pic-box">
+        <div class="font-bold text-xs">${pic}</div>
+        <div class="font-bold" style="color:var(--blue-600); font-size:15px;">${done}/${list.length}</div>
+        <div class="text-xs text-muted">Tuntas</div>
+      </div>`;
+  }).join('');
+}
+
+function renderDashboardEWList(ewItems) {
+  document.getElementById('panel-ew-badge').textContent = `${ewItems.length} Item`;
+  const container = document.getElementById('dashboard-ew-list');
+  if (ewItems.length === 0) {
+    container.innerHTML = `<div class="text-center text-muted text-sm" style="padding:28px 0;">Semua item aman sesuai jadwal!</div>`;
+    return;
+  }
+  container.innerHTML = ewItems.map(it => {
+    const ew = getEarlyWarning(it);
+    return `
+      <div style="border:1px solid var(--slate-200); border-radius:8px; padding:10px 12px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+        <div>
+          <div class="font-bold text-sm">${it.id} &bull; ${it.title}</div>
+          <div class="text-xs text-muted">PIC: <strong>${it.pic}</strong> &bull; Tenggat: ${formatDateID(it.dueDate)}</div>
+        </div>
+        <div class="text-right">
+          <div class="mb-1"><span class="badge ${ew.badgeClass}">${ew.label}</span></div>
+          <button class="btn btn-outline-primary btn-sm" onclick="openEditModal('${it.id}')">Update</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderPhotoPair(it, isReport = false) {
+  const cls = isReport ? 'report-photo' : 'thumb-photo';
+  const bef = it.photoBefore
+    ? `<img src="${it.photoBefore}" class="${cls}" title="Foto Before (${it.id})" onclick="previewPhoto('${it.photoBefore}', '${it.id} - Dokumentasi Before')" />`
+    : `<span class="badge badge-light">No Before</span>`;
+  const aft = it.photoAfter
+    ? `<img src="${it.photoAfter}" class="${cls}" title="Foto After (${it.id})" onclick="previewPhoto('${it.photoAfter}', '${it.id} - Dokumentasi After')" />`
+    : `<span class="badge badge-light">Belum After</span>`;
+  return isReport ? { bef, aft } : `<div class="flex items-center gap-1">${bef}${aft}</div>`;
+}
+
+function renderDashboardTable(items) {
+  document.getElementById('dashboard-table-body').innerHTML = items.map((it, idx) => {
+    const ew = getEarlyWarning(it);
+    return `
+      <tr>
+        <td class="font-bold">${idx + 1}</td>
+        <td>
+          <div class="font-bold text-sm">${it.title}</div>
+          <div class="text-xs text-muted">${it.id} &bull; ${it.description.substring(0, 62)}...</div>
+        </td>
+        <td><span class="badge badge-light">${it.pic}</span></td>
+        <td class="text-xs">${formatDateID(it.foundDate)}</td>
+        <td class="text-xs">${formatDateID(it.dueDate)}</td>
+        <td><span class="badge ${ew.badgeClass}">${ew.label}</span></td>
+        <td>${getStatusBadge(it.status)}</td>
+        <td>${renderPhotoPair(it, false)}</td>
+        <td>
+          <button class="btn btn-outline-primary btn-sm" onclick="openEditModal('${it.id}')">Edit</button>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+function populatePicFilter() {
+  const sel = document.getElementById('filter-pic');
+  const currentVal = sel.value;
+  const pics = [...new Set(state.items.map(i => i.pic))];
+  sel.innerHTML = `<option value="ALL">Semua PIC Lapangan</option>` +
+    pics.map(p => `<option value="${p}">${p}</option>`).join('');
+  if (pics.includes(currentVal)) sel.value = currentVal;
+}
+
+function renderFullTable(items) {
+  const q = document.getElementById('filter-search').value.toLowerCase();
+  const st = document.getElementById('filter-status').value;
+  const pic = document.getElementById('filter-pic').value;
+  const ewFilter = document.getElementById('filter-ew').value;
+
+  const filtered = items.filter(it => {
+    const ew = getEarlyWarning(it);
+    const matchQ = it.title.toLowerCase().includes(q) || it.description.toLowerCase().includes(q) || it.pic.toLowerCase().includes(q) || it.id.toLowerCase().includes(q);
+    const matchSt = st === 'ALL' || it.status === st;
+    const matchPic = pic === 'ALL' || it.pic === pic;
+    const matchEw = ewFilter === 'ALL' || ew.zone === ewFilter;
+    return matchQ && matchSt && matchPic && matchEw;
+  });
+
+  const isMgmt = state.currentUser && state.currentUser.role === 'mgmt';
+  document.getElementById('full-table-body').innerHTML = filtered.map((it, idx) => {
+    const ew = getEarlyWarning(it);
+    return `
+      <tr>
+        <td class="text-center font-bold">${idx + 1}</td>
+        <td>
+          <div class="font-bold">${it.id} — ${it.title}</div>
+          <div class="text-xs text-muted">${it.description}</div>
+          ${it.remarks ? `<div class="text-xs mt-1" style="color:var(--blue-600);">Catatan: ${it.remarks}</div>` : ''}
+        </td>
+        <td><strong>${it.pic}</strong></td>
+        <td class="text-xs">${formatDateID(it.foundDate)}</td>
+        <td class="text-xs">${formatDateID(it.dueDate)}</td>
+        <td><span class="badge ${ew.badgeClass}">${ew.label}</span></td>
+        <td>${getStatusBadge(it.status)}</td>
+        <td>${renderPhotoPair(it, false)}</td>
+        <td>
+          <div class="flex gap-1">
+            <button class="btn btn-primary btn-sm" onclick="openEditModal('${it.id}')">Edit</button>
+            ${isMgmt ? `<button class="btn btn-outline-danger btn-sm" onclick="deleteItem('${it.id}')">Hapus</button>` : ''}
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+function renderEWTable(items) {
+  const sorted = [...items].sort((a, b) => getEarlyWarning(a).diffDays - getEarlyWarning(b).diffDays);
+  document.getElementById('ew-table-body').innerHTML = sorted.map((it, idx) => {
+    const ew = getEarlyWarning(it);
+    return `
+      <tr>
+        <td>${idx + 1}</td>
+        <td><strong>${it.id}</strong> — ${it.title}</td>
+        <td>${it.pic}</td>
+        <td>${formatDateID(it.foundDate)}</td>
+        <td>${formatDateID(it.dueDate)}</td>
+        <td><span class="badge ${ew.badgeClass}">${ew.label}</span></td>
+        <td>${getStatusBadge(it.status)}</td>
+        <td><button class="btn btn-outline-primary btn-sm" onclick="openEditModal('${it.id}')">Tindak Lanjuti</button></td>
+      </tr>`;
+  }).join('');
+}
+
+function renderReportTable(items) {
+  const now = new Date();
+  document.getElementById('report-print-date').textContent = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+  const verifiedCount = items.filter(i => i.status === 'Verified/Closed').length;
+  document.getElementById('rep-total').textContent = items.length;
+  document.getElementById('rep-verified').textContent = verifiedCount;
+  document.getElementById('rep-pct').textContent = items.length ? ((verifiedCount / items.length) * 100).toFixed(1) + '%' : '0%';
+
+  document.getElementById('report-table-body').innerHTML = items.map((it, idx) => {
+    const photos = renderPhotoPair(it, true);
+    return `
+      <tr>
+        <td class="text-center font-bold">${idx + 1}</td>
+        <td class="font-bold">${it.title}</td>
+        <td class="text-xs">${it.description}</td>
+        <td class="text-center">${it.pic}</td>
+        <td class="text-center text-xs">${formatDateID(it.foundDate)}</td>
+        <td class="text-center">${photos.bef}</td>
+        <td class="text-center text-xs">${formatDateID(it.dueDate)}</td>
+        <td class="text-center">${photos.aft}</td>
+        <td class="text-center">${getStatusBadge(it.status)}</td>
+      </tr>`;
+  }).join('');
+}
+
+// ==================== CRUD PUNCH LIST & VALIDASI POKA-YOKE ====================
+function populatePicSelect() {
+  const sel = document.getElementById('edit-pic');
+  const picUsers = state.users.filter(u => u.role === 'pic');
+  const names = picUsers.length ? picUsers.map(u => u.name) : ['Anton', 'Adul', 'Budi', 'Ali'];
+  sel.innerHTML = names.map(n => `<option value="${n}">${n}</option>`).join('');
+}
+
+function openAddModal() {
+  populatePicSelect();
+  document.getElementById('itemModalTitle').textContent = 'Input Temuan Punch List Baru';
+  document.getElementById('edit-item-id').value = '';
+  document.getElementById('edit-title').value = '';
+  document.getElementById('edit-desc').value = '';
+  document.getElementById('edit-found-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('edit-due-date').value = '2026-11-30';
+  document.getElementById('edit-status').value = 'Open';
+  document.getElementById('edit-remarks').value = '';
+  document.getElementById('poka-yoke-alert').classList.add('hidden');
+
+  setFormPermissions(true);
+  setModalPhotos('', '');
+  openModal('itemModal');
+}
+
+function openEditModal(id) {
+  const item = state.items.find(i => i.id === id);
+  if (!item) return;
+  populatePicSelect();
+
+  document.getElementById('itemModalTitle').textContent = `Update & Verifikasi Item ${item.id}`;
+  document.getElementById('edit-item-id').value = item.id;
+  document.getElementById('edit-title').value = item.title;
+  document.getElementById('edit-pic').value = item.pic;
+  document.getElementById('edit-priority').value = item.priority || 'High';
+  document.getElementById('edit-desc').value = item.description;
+  document.getElementById('edit-found-date').value = item.foundDate;
+  document.getElementById('edit-due-date').value = item.dueDate;
+  document.getElementById('edit-status').value = item.status;
+  document.getElementById('edit-remarks').value = item.remarks || '';
+  document.getElementById('poka-yoke-alert').classList.add('hidden');
+
+  const isMgmt = state.currentUser && state.currentUser.role === 'mgmt';
+  setFormPermissions(isMgmt);
+  setModalPhotos(item.photoBefore, item.photoAfter);
+  openModal('itemModal');
+}
+
+function setFormPermissions(isMgmt) {
+  document.getElementById('edit-title').readOnly = !isMgmt;
+  document.getElementById('edit-pic').disabled = !isMgmt;
+  document.getElementById('edit-priority').disabled = !isMgmt;
+  document.getElementById('edit-desc').readOnly = !isMgmt;
+  document.getElementById('edit-found-date').readOnly = !isMgmt;
+  document.getElementById('edit-due-date').readOnly = !isMgmt;
+
+  const statusSel = document.getElementById('edit-status');
+  Array.from(statusSel.options).forEach(opt => {
+    if (opt.value === 'Verified/Closed') opt.disabled = !isMgmt;
+  });
+}
+
+function setModalPhotos(bef, aft) {
+  tempPhotoBefore = bef || '';
+  tempPhotoAfter = aft || '';
+  document.getElementById('upload-before').value = '';
+  document.getElementById('upload-after').value = '';
+
+  const imgB = document.getElementById('preview-before');
+  const empB = document.getElementById('empty-before');
+  if (tempPhotoBefore) {
+    imgB.src = tempPhotoBefore; imgB.style.display = 'block'; empB.style.display = 'none';
+  } else {
+    imgB.style.display = 'none'; empB.style.display = 'block';
+  }
+
+  const imgA = document.getElementById('preview-after');
+  const empA = document.getElementById('empty-after');
+  if (tempPhotoAfter) {
+    imgA.src = tempPhotoAfter; imgA.style.display = 'block'; empA.style.display = 'none';
+  } else {
+    imgA.style.display = 'none'; empA.style.display = 'block';
+  }
+}
+
+function handleImageUpload(event, target) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const maxW = 480;
+      const scale = Math.min(1, maxW / img.width);
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const compressed = canvas.toDataURL('image/jpeg', 0.72);
+      if (target === 'before') setModalPhotos(compressed, tempPhotoAfter);
+      else setModalPhotos(tempPhotoBefore, compressed);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+document.getElementById('item-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const id = document.getElementById('edit-item-id').value;
+  const status = document.getElementById('edit-status').value;
+  const alertBox = document.getElementById('poka-yoke-alert');
+
+  if ((status === 'Completed' || status === 'Verified/Closed') && !tempPhotoAfter) {
+    alertBox.innerHTML = '<strong>Validasi Poka-Yoke Ditolak:</strong> Anda wajib mengunggah <strong>Dokumentasi Sesudah (Foto After)</strong> sebelum mengubah status menjadi <em>Completed</em> atau <em>Verified/Closed</em>!';
+    alertBox.classList.remove('hidden');
+    return;
+  }
+
+  const payload = {
+    title: document.getElementById('edit-title').value.trim(),
+    pic: document.getElementById('edit-pic').value,
+    priority: document.getElementById('edit-priority').value,
+    description: document.getElementById('edit-desc').value.trim(),
+    foundDate: document.getElementById('edit-found-date').value,
+    dueDate: document.getElementById('edit-due-date').value,
+    status: status,
+    remarks: document.getElementById('edit-remarks').value.trim(),
+    photoBefore: tempPhotoBefore,
+    photoAfter: tempPhotoAfter
+  };
+
+  if (id) {
+    const idx = state.items.findIndex(i => i.id === id);
+    if (idx !== -1) state.items[idx] = { ...state.items[idx], ...payload };
+  } else {
+    const nextNum = state.items.length + 1;
+    const newId = 'PL-' + String(nextNum).padStart(3, '0');
+    state.items.push({ id: newId, no: nextNum, ...payload });
+  }
+
+  await pushToCloud();
+  renderAll();
+  closeModal('itemModal');
+});
+
+async function deleteItem(id) {
+  if (!confirm(`Hapus catatan punch list ${id}?`)) return;
+  state.items = state.items.filter(i => i.id !== id);
+  await pushToCloud();
+  renderAll();
+}
+
+function previewPhoto(src, title) {
+  document.getElementById('photoPreviewImg').src = src;
+  document.getElementById('photoPreviewTitle').textContent = title;
+  openModal('photoPreviewModal');
+}
+
+// ==================== MANAJEMEN PENGGUNA (CRUD USERS) ====================
+function renderUsersTable() {
+  const tbody = document.getElementById('users-table-body');
+  if (!tbody) return;
+  tbody.innerHTML = state.users.map((u, idx) => `
+    <tr>
+      <td class="text-center font-bold">${idx + 1}</td>
+      <td class="font-bold">${u.name}</td>
+      <td><code>${u.email}</code></td>
+      <td><code>${u.password}</code></td>
+      <td>${u.role === 'mgmt'
+        ? '<span class="badge badge-primary">Manajemen Kontraktor Utama</span>'
+        : '<span class="badge badge-success">Tim Lapangan (PIC)</span>'}</td>
+      <td>${u.phone || '-'}</td>
+      <td>
+        <div class="flex gap-1">
+          <button class="btn btn-outline-primary btn-sm" onclick="openUserModal('${u.id}')">Edit</button>
+          ${u.id !== 'u1' ? `<button class="btn btn-outline-danger btn-sm" onclick="deleteUser('${u.id}')">Hapus</button>` : ''}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function openUserModal(userId = '') {
+  document.getElementById('edit-user-id').value = userId;
+  if (userId) {
+    const u = state.users.find(x => x.id === userId);
+    if (!u) return;
+    document.getElementById('userModalTitle').textContent = 'Edit Data Pengguna';
+    document.getElementById('user-name').value = u.name;
+    document.getElementById('user-email').value = u.email;
+    document.getElementById('user-password').value = u.password;
+    document.getElementById('user-role').value = u.role;
+    document.getElementById('user-phone').value = u.phone || '';
+  } else {
+    document.getElementById('userModalTitle').textContent = 'Tambah Pengguna Baru';
+    document.getElementById('user-form').reset();
+  }
+  openModal('userModal');
+}
+
+document.getElementById('user-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const uid = document.getElementById('edit-user-id').value;
+  const userObj = {
+    name: document.getElementById('user-name').value.trim(),
+    email: document.getElementById('user-email').value.trim(),
+    password: document.getElementById('user-password').value.trim(),
+    role: document.getElementById('user-role').value,
+    phone: document.getElementById('user-phone').value.trim()
+  };
+
+  if (uid) {
+    const idx = state.users.findIndex(u => u.id === uid);
+    if (idx !== -1) state.users[idx] = { ...state.users[idx], ...userObj };
+  } else {
+    state.users.push({ id: 'u' + Date.now(), ...userObj });
+  }
+
+  await pushToCloud();
+  renderAll();
+  closeModal('userModal');
+});
+
+async function deleteUser(uid) {
+  if (!confirm('Hapus akun pengguna ini?')) return;
+  state.users = state.users.filter(u => u.id !== uid);
+  await pushToCloud();
+  renderAll();
+}
+
+// ==================== EKSPOR EXCEL BERGAMBAR & RESET DATA ====================
+function exportExcelWithImages() {
+  const tableHtml = document.getElementById('printable-report-area').innerHTML;
+  const template = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+    <head><meta charset="utf-8" /></head>
+    <body>${tableHtml}</body>
+    </html>`;
+  const blob = new Blob([template], { type: 'application/vnd.ms-excel' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Laporan_PunchList_Bergambar_Kelompok4.xls';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function resetDemoData() {
+  if (!confirm('Reset seluruh data kembali ke 15 temuan awal studi kasus Kelompok 4?')) return;
+  state.items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+  state.users = JSON.parse(JSON.stringify(DEFAULT_USERS));
+  await pushToCloud();
+  renderAll();
+}
+
+// ==================== STARTUP ====================
+(function init() {
+  loadLocalData();
+  if (state.firebaseUrl) {
+    document.getElementById('firebase-url-input').value = state.firebaseUrl;
+  }
+  startRealtimePolling();
+
+  const savedSession = sessionStorage.getItem('sim_punchlist_session');
+  if (savedSession) {
+    try {
+      const user = JSON.parse(savedSession);
+      loginSuccess(user);
+    } catch (e) {}
+  }
+})();
+</script>
+</body>
+</html>
